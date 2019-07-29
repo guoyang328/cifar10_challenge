@@ -82,8 +82,8 @@ merged_summaries = tf.summary.merge_all()
 
 # keep the configuration file with the model for reproducibility
 shutil.copy('config.json', model_dir)
-
-with tf.Session() as sess:
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
+with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
 
   # initialize data augmentation
   cifar = cifar10_input.AugmentedCIFAR10Data(raw_cifar, sess, model)
